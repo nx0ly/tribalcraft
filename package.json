@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "commitMain": "git add . && git commit -m \"Automatic commit\" && git push"
+    "commitMain": "git checkout main && git add . && git commit -m \"Automatic commit\" && git push"
   },
   "keywords": [],
   "author": "",
