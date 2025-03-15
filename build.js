@@ -1,8 +1,21 @@
-require("esbuild").build({
+import { build } from "esbuild";
+
+const packages = await import('./package.json', { with: { type: 'json' } });
+
+build({
     entryPoints: ["server/index.ts"],
     outdir: "dist",
-    minify: true,
     platform: "node",
+    format: "esm",
+    target: ["node18"],
+    bundle: true,
+    minify: true,
+    loader: {
+        ".ts": "ts",
+        ".js": "js"
+    },
+    external: Object.keys(packages.default.dependencies || {}),
+    sourcemap: true,
     banner: {
         js: `
 /*
@@ -13,7 +26,7 @@ require("esbuild").build({
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- *
+ * 
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -21,7 +34,11 @@ require("esbuild").build({
  *
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
- */
-`
+ */`
     }
-}).then(() => console.log("Successfully built TribalCraft!"));
+}).then(() => {
+    console.log("Successfully built TribalCraft!");
+}).catch((err) => {
+    console.error("build failed:", err);
+    process.exit(1);
+});

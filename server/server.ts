@@ -1,21 +1,25 @@
-import type WebSocket from "ws";
-
 import { WebSocketServer } from "ws";
 import { config } from "dotenv";
-import path from "node:path";
-import { fileURLToPath } from "node:url";
+import { dirname, resolve } from "path";
+import { fileURLToPath } from "url";
 
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const __dirname = dirname(fileURLToPath(import.meta.url));
+
 config({
-	path: path.resolve(__dirname, ".env"),
+    path: resolve(__dirname, "../.env")
 });
 
-const Server = new WebSocketServer({ port: Number(process.env.WSPORT) });
+export default function InitServer() {
+    const wsPort = process.env.WSPORT || 8080;
+    const server = new WebSocketServer({ port: Number(wsPort) });
 
-Server.on("connection", (stream: WebSocket) => {
-    stream.addEventListener("open", () => {});
-
-    stream.addEventListener("message", () => {
-
+    server.on("connection", (socket) => {
+        console.log("New WebSocket connection");
+        
+        socket.on("message", (data) => {
+            console.log("Received:", data);
+        });
     });
-});
+
+    console.log(`WebSocket server listening on port ${wsPort}`);
+}

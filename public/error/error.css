@@ -1,0 +1,23 @@
+body {
+    background-color: #eae9e0;
+    color: #616161;
+}
+
+#error-holder {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-weight: bold;
+}
+
+#fourohfour {
+    font-size: 64px;
+}
