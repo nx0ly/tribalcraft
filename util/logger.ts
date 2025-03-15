@@ -11,7 +11,7 @@ config({
 
 // biome-ignore lint/complexity/noStaticOnlyClass: <no comment needed>
 class Logger {
-    static alert(msg) {
+    static alert(msg: string) {
         console.log(`${chalk.redBright("[!]")} ${msg}`);
 
         // lets update the webhook to log urgent issues to our attention
@@ -28,8 +28,12 @@ class Logger {
         }
     }
 
-    static warn(msg) {
+    static warn(msg: string) {
         console.log(`${chalk.yellowBright("[?]")} ${msg}`);
+    }
+
+    static info(msg: string) {
+        console.log(`${chalk.greenBright("[-]")} ${msg}`);
     }
 }
 

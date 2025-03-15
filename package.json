@@ -5,7 +5,7 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "review": "node dist/index.js",
+    "review": "node dist/server/index.js",
     "build": "node build.js",
     "commitMain": "git checkout -b main && git add . && git commit -m \"Automatic commit\" && git push",
     "commitAlpha": "git checkout alpha && git add . && git commit -m \"Automatic commit\" && git push",

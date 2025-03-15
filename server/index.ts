@@ -7,15 +7,16 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 const app = express();
 
 app.get("/", (req, res) => {
-    res.sendFile(resolve(__dirname, "../public/home/home.html"));
+    res.sendFile(resolve(__dirname, "../../public/home/home.html"));
 });
 
 app.get("*", (req, res) => {
-    const filePath = resolve(__dirname, `../${req.path}`);
+    const filePath = resolve(__dirname, `../../${req.path}`);
+    console.log(filePath)
 
     res.sendFile(filePath, (err) => {
         if (err) {
-            res.status(404).sendFile(resolve(__dirname, "../public/error/error.html"));
+            res.status(404).sendFile(resolve(__dirname, "../../public/error/error.html"));
         }
     });
 });
