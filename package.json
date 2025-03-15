@@ -1,0 +1,12 @@
+{
+  "name": "Tribalcraft",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "commitMain": "git add . && git commit -m \"Automatic commit\" && git push"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}

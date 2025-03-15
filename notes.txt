@@ -1,0 +1,10 @@
+git checkout <branch name>
+- add -b flag to make new branch
+
+git stash
+- WIP
+- saves changes to git
+
+git merge <branch name>
+- commits code from the branch to the main branch
+- add --squash flag to merge by 1 commit (if multiple commits exist in other branch)
