@@ -1,5 +1,5 @@
 git checkout <branch name>
-- add -b flag to make new branch
+- add -b flag to go to branch
 
 git stash
 - WIP

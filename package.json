@@ -4,13 +4,20 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "commitMain": "git checkout main && git add . && git commit -m \"Automatic commit\" && git push"
+    "build": "node build.js",
+    "commitMain": "git checkout -b main && git add . && git commit -m \"Automatic commit\" && git push",
+    "commitAlpha": "git checkout alpha && git add . && git commit -m \"Automatic commit\" && git push",
+    "commitBeta": "git checkout -b betw && git add . && git commit -m \"Automatic commit\" && git push"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "chalk": "4.1.2",
+    "dotenv": "^16.4.7",
+    "esbuild": "^0.25.1",
     "express": "^4.21.2",
-    "fs": "0.0.1-security"
+    "fs": "0.0.1-security",
+    "ws": "^8.18.1"
   }
 }
