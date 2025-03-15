@@ -14,12 +14,10 @@ export default function InitServer() {
     const server = new WebSocketServer({ port: Number(wsPort) });
 
     server.on("connection", (socket) => {
-        console.log("New WebSocket connection");
-        
+
         socket.on("message", (data) => {
-            console.log("Received:", data);
         });
     });
 
-    console.log(`WebSocket server listening on port ${wsPort}`);
+    console.log(`WebServer listening on PORT ${wsPort}`);
 }
