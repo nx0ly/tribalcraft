@@ -4,6 +4,7 @@ import { dirname, resolve } from "path";
 import { fileURLToPath } from "url";
 import type { CowWS } from "./server.d";
 import type { PlayerType } from "../entities/Player";
+import Player from "../entities/Player";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
@@ -22,8 +23,11 @@ export default function InitServer() {
 
     server.on("connection", (socket: CowWS, request) => {
         connectedClients.push(socket);
-        connectedPlayers = connectedClients.map((ws: CowWS) => ws.player);
-        
+
+        socket.wsSend = (arg) => {
+            socket.send(JSON.stringify(arg));
+        };
+
         socket.on("message", (buffer: Buffer) => {
             const data = JSON.parse(decoder.decode(buffer));
 
@@ -31,6 +35,25 @@ export default function InitServer() {
             const args = data.slice(1);
 
             console.log(args);
+
+            switch (type) {
+                case "sp": {
+                    const id = 1;
+
+                    socket.player = new Player(id, "Allah");
+
+                    socket.wsSend(["setid", id]);
+
+                    for(const stream of connectedClients) {
+                        if(!stream?.player?.id) continue;
+                        if(stream.player.id !== id) stream.wsSend(["addplayer", id]);
+                    }
+
+                    connectedPlayers = connectedClients.map((ws: CowWS) => ws.player);
+
+                    socket.player.spawn(false);
+                }
+            }
         });
     });
 

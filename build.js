@@ -10,7 +10,7 @@ build({
     format: "esm",
     target: ["node18"],
     bundle: true,
-    minify: true,
+    //minify: true,
     loader: {
         ".ts": "ts",
         ".js": "js"
@@ -28,9 +28,9 @@ build({
         outdir: "dist/client",
         platform: "browser",
         format: "esm",
-        target: ["es2020"],
+        target: ["es2016"],
         bundle: true,
-        minify: true,
+        //minify: true,
         loader: {
             ".ts": "ts",
             ".js": "js"

@@ -1,4 +1,5 @@
 import { canvas, draw, gl } from "./render/render";
+import { ws } from "./websocket/init";
 
 draw();
 
@@ -36,6 +37,8 @@ window.onkeydown = (event) => {
     else if (keys.d || keys.arrowright) rotation = 0;
     else if (keys.w || keys.arrowup) rotation = -Math.PI / 2;
     else if (keys.s || keys.arrowdown) rotation = Math.PI / 2;
+
+    ws.wsSend(["look", rotation]);
 };
 
 window.onkeyup = (event) => {

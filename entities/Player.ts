@@ -9,6 +9,12 @@ export interface PlayerType {
     yl?: number;
     health: number;
     alive: boolean;
+    moveDir?: number | undefined;
+    xVel: number;
+    yVel: number;
+    speed: number;
+
+    spawn: (supporter: boolean, x?: number, y?: number) => void;
 }
 
 class Player implements PlayerType {
@@ -22,6 +28,10 @@ class Player implements PlayerType {
     public cape: number;
     public health: number;
     public alive = false;
+    public moveDir: number | undefined = undefined;
+    public speed = 55;
+    public xVel = 0;
+    public yVel = 0;
 
     constructor(id: number, name: string) {
         this.id = id;

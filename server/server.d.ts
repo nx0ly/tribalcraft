@@ -7,7 +7,8 @@ interface CowWS extends WebSocket {
 
     // biome-ignore lint/suspicious/noExplicitAny: <explanation>
     on: (type: string, action: (buffer: Buffer) => void) => any;
-    wsSend: (data: string) => void;
+    // biome-ignore lint/suspicious/noExplicitAny: literally can be anything
+    wsSend: (data: any[]) => void;
 }
 
 export type {
