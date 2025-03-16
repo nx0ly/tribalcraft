@@ -25,3 +25,19 @@ window.onresize = () => {
         }
     }
 }
+
+const keys: { [key: string]: boolean } = {};
+let rotation = 0;
+
+window.onkeydown = (event) => {
+    keys[event.key.toLowerCase()] = true;
+
+    if (keys.a || keys.arrowleft) rotation = Math.PI;
+    else if (keys.d || keys.arrowright) rotation = 0;
+    else if (keys.w || keys.arrowup) rotation = -Math.PI / 2;
+    else if (keys.s || keys.arrowdown) rotation = Math.PI / 2;
+};
+
+window.onkeyup = (event) => {
+    keys[event.key.toLowerCase()] = false;
+};

@@ -30,6 +30,7 @@ build({
         format: "esm",
         target: ["es2020"],
         bundle: true,
+        minify: true,
         loader: {
             ".ts": "ts",
             ".js": "js"

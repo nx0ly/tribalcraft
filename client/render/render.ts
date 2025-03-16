@@ -15,8 +15,10 @@ export let program: WebGLProgram | null = null;
     program = await initGL();
 })();
 
+let xOffset = 0;
+let yOffset = 0;
+
 export function draw() {
-    console.log(program);
     requestAnimationFrame(draw);
     if(!program) return;
 

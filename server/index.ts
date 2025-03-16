@@ -2,6 +2,7 @@ import express from "express";
 import InitServer from "./server.js";
 import { fileURLToPath } from "url";
 import { dirname, resolve } from "path";
+import initUpdateLoop from "./update.js";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const app = express();
@@ -26,3 +27,4 @@ app.listen(3000, () => {
 });
 
 InitServer();
+initUpdateLoop();
