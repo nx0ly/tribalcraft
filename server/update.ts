@@ -10,41 +10,43 @@ config({
 
 function update() {
     for(const player of connectedPlayers) {
-        if(!player.alive) continue;
+        if(!player?.alive) continue;
 
-        let cosineMovement = (player.moveDir !== undefined ? Math.cos(player.moveDir) : 0);
-        let sineMovement = (player.moveDir !== undefined ? Math.sin(player.moveDir) : 0);
+        let cosineMovement = (player.moveDir !== null ? Math.cos(player.moveDir) : 0);
+        let sineMovement = (player.moveDir !== null ? Math.sin(player.moveDir) : 0);
         const distance = Math.sqrt(cosineMovement * cosineMovement + sineMovement * sineMovement);
 
+        console.log(player.moveDir, player.moveDir !== null, (player.moveDir !== undefined ? Math.cos(player.moveDir) : 0), sineMovement)
+
         if(distance !== 0) {
-            cosineMovement /= distance;
-            sineMovement /= distance;
+            cosineMovement /= distance * 1.75;
+            sineMovement /= distance * 1.75;
         }
 
-        player.xVel += cosineMovement * (player.speed) / 100;
-        player.yVel += sineMovement * (player.speed) / 100;
+        player.xVel += cosineMovement;
+        player.yVel += sineMovement;
 
         if (Math.abs(player.xVel) > 0.01) {
-            player.xVel *= 0.993 ** 111;
+            player.xVel *= 0.993 ** 100;
         } else {
             player.xVel = 0;
         }
 
         if (Math.abs(player.yVel) > 0.01) {
-            player.yVel *= 0.993 ** 111;
+            player.yVel *= 0.993 ** 100;
         } else {
             player.yVel = 0;
         }
 
-        player.x += player.xVel * 111;
-        player.y += player.yVel * 111;
+        player.x += player.xVel * 100;
+        player.y += player.yVel * 100;
     }
 
-    sendToAll(connectedPlayers.map(player => ({
+    sendToAll(["updateppl", connectedPlayers.map(player => ({
         id: player.id,
         x: player.x,
         y: player.y
-    })));
+    }))]);
 }
 
 function sendToAll(data) {

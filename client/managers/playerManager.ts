@@ -1,15 +1,17 @@
-import type { PlayerType } from "../../../entities/Player";
-import Player from "../../../entities/Player";
+import type { PlayerType } from "../../entities/Player";
+import Player from "../../entities/Player";
 
 class playerManager {
-    public players: Player[];
-    public myPlayer: PlayerType;
+    public players: Player[] = [];
+    public myPlayer: PlayerType | undefined = undefined;
 
-    addPlayer(id: number, name: string, x: number, y: number) {
+    addPlayer(id: number, name: string, x: number, y: number, isMe: boolean) {
         const player = new Player(id, name);
         this.players.push(player);
 
         player.spawn(false, x, y);
+
+        if(isMe) this.myPlayer = player;
     }
 
     getPlayerByID(id: number): Player | undefined {

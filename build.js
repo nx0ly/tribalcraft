@@ -16,7 +16,7 @@ build({
         ".js": "js"
     },
     external: Object.keys(packages.default.dependencies || {}),
-    sourcemap: true,
+    //sourcemap: true,
     banner: {
         js: "/* TribalCraft Server - Copyright (C) 2025 TribalCraft - GPLv3 */"
     }
@@ -35,7 +35,7 @@ build({
             ".ts": "ts",
             ".js": "js"
         },
-        sourcemap: true,
+        //sourcemap: true,
         banner: {
             js: "/* TribalCraft Client - Copyright (C) 2025 TribalCraft - GPLv3 */"
         }

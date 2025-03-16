@@ -24,6 +24,10 @@ class Player implements PlayerType {
     public y: number;
     public xl?: number | undefined;
     public yl?: number | undefined;
+    public lastx: number;
+    public lasty: number;
+    public dx: number;
+    public dy: number;
     public skin: number;
     public cape: number;
     public health: number;
@@ -47,6 +51,13 @@ class Player implements PlayerType {
         else this.x = randomInteger(0, 16800);
         if(y) this.y = y;
         else this.y = randomInteger(0, 16800);
+
+        this.lastx = this.x;
+        this.lasty = this.y;
+        this.xl = this.x;
+        this.yl = this.y;
+        this.dx = this.x;
+        this.dy = this.y;
     }
 }
 

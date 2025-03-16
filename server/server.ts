@@ -15,6 +15,7 @@ config({
 const IPs: number[] = [];
 export const connectedClients: CowWS[] = [];
 export let connectedPlayers: PlayerType[] = [];
+let id = 0;
 
 export default function InitServer() {
     const wsPort = process.env.WSPORT || 8080;
@@ -34,24 +35,30 @@ export default function InitServer() {
             const type = data[0];
             const args = data.slice(1);
 
-            console.log(args);
-
             switch (type) {
                 case "sp": {
-                    const id = 1;
-
-                    socket.player = new Player(id, "Allah");
+                    socket.player = new Player(++id, "Allah");
+                    socket.player.spawn(false);
 
                     socket.wsSend(["setid", id]);
+                    socket.wsSend(["addplayer", id, socket.player.x, socket.player.y, true]);
 
                     for(const stream of connectedClients) {
                         if(!stream?.player?.id) continue;
-                        if(stream.player.id !== id) stream.wsSend(["addplayer", id]);
+                        if(stream.player.id !== id) stream.wsSend(["addplayer", id, socket.player.x, socket.player.y, false]);
+                    }
+
+                    for(const alreadyExistingPlayer of connectedClients.map((a) => a.player)) {
+                        socket.wsSend(["addplayer", alreadyExistingPlayer.id, alreadyExistingPlayer.x, alreadyExistingPlayer.y, false]);
                     }
 
                     connectedPlayers = connectedClients.map((ws: CowWS) => ws.player);
 
-                    socket.player.spawn(false);
+                    break;
+                }
+
+                case "look": {
+                    socket.player.moveDir = args[0];
                 }
             }
         });

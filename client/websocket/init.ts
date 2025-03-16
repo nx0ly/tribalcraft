@@ -1,3 +1,5 @@
+import { PlayerManager } from "../managers/playerManager";
+
 interface customWS extends WebSocket {
     // biome-ignore lint/suspicious/noExplicitAny: <explanation>
     wsSend: ((arg: any[]) => void);
@@ -19,12 +21,36 @@ export default function initWs() {
         const type = data[0];
         const args = data.slice(1);
 
-        console.log(type, args);
-
         switch (type) {
-            case "": {
+            case "setid": {
+                //PlayerManager.addPlayer(args[0], "allah", args[1], args[2], args[3]);
+                //PlayerManager.addPlayer()
 
                 break;
+            }
+
+            case "addplayer": {
+                PlayerManager.addPlayer(args[0], "allah", args[1], args[2], args[3]);
+
+                break;
+            }
+
+            case "updateppl": {
+                const data = args[0];
+
+                for(const datas in data) {
+                    const playerData = data[datas];
+                    const player = PlayerManager.getPlayerByID(playerData.id);
+
+                    if(!player) continue;
+
+                    player.dx = player.x - player.lastx;
+                    player.dy = player.y - player.lasty;
+
+                    player.x = playerData.x;
+                    player.y = playerData.y;
+                    console.error(player.lastx, player.x);
+                }
             }
         }
     }

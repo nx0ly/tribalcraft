@@ -28,19 +28,37 @@ window.onresize = () => {
 }
 
 const keys: { [key: string]: boolean } = {};
-let rotation = 0;
+let rotation: number | undefined = undefined;
 
 window.onkeydown = (event) => {
     keys[event.key.toLowerCase()] = true;
-
-    if (keys.a || keys.arrowleft) rotation = Math.PI;
-    else if (keys.d || keys.arrowright) rotation = 0;
-    else if (keys.w || keys.arrowup) rotation = -Math.PI / 2;
-    else if (keys.s || keys.arrowdown) rotation = Math.PI / 2;
-
-    ws.wsSend(["look", rotation]);
+    updateRotation();
 };
 
 window.onkeyup = (event) => {
     keys[event.key.toLowerCase()] = false;
+    updateRotation();
 };
+
+function updateRotation() {
+    const left = keys.a || keys.arrowleft;
+    const right = keys.d || keys.arrowright;
+    const up = keys.w || keys.arrowup;
+    const down = keys.s || keys.arrowdown;
+
+    if (!left && !right && !up && !down) {
+        rotation = undefined;
+    } else {
+        let dx = 0;
+        let dy = 0;
+
+        if (left) dx -= 1;
+        if (right) dx += 1;
+        if (up) dy += 1;
+        if (down) dy -= 1;
+
+        rotation = Math.atan2(dy, dx);
+    }
+
+    ws.wsSend(["look", rotation]);
+}
