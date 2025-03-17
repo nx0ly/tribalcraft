@@ -1,3 +1,5 @@
+import { gl } from "../render";
+
 interface Rectangle {
     x: number;
     y: number;
@@ -5,11 +7,14 @@ interface Rectangle {
     height: number;
 }
 
+let buffer: WebGLBuffer = gl?.createBuffer();
+
 export function renderRectangle(
     program: WebGLProgram, 
     gl: WebGLRenderingContext | null, 
     { x, y, width, height }: Rectangle, 
-    color: [number, number, number, number]
+    color: [number, number, number, number],
+    useNewBuffer = false
 ): void {
     if(!gl) throw new Error("gl context is not defined");
     
@@ -20,7 +25,11 @@ export function renderRectangle(
         x + width, y + height  // top right
     ]);
 
-    const vertexBuffer = gl.createBuffer();
+    if(useNewBuffer) {
+        buffer = gl.createBuffer();
+    }
+    const vertexBuffer = buffer;
+
     gl.bindBuffer(gl.ARRAY_BUFFER, vertexBuffer);
     gl.bufferData(gl.ARRAY_BUFFER, vertices, gl.STATIC_DRAW);
 

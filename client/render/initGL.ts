@@ -1,8 +1,8 @@
 import { gl } from "./render";
 
 export async function initGL(): Promise<WebGLProgram> {
-    const vertexShaderSource = await fetch("client/render/glsl/vertex.glsl").then(resp => resp.text());
-    const fragmentShaderSource = await fetch("client/render/glsl/frag.glsl").then(resp => resp.text());
+    const vertexShaderSource = await fetch("client/render/glsl/shaders/vertex/bg/vertex.glsl").then(resp => resp.text());
+    const fragmentShaderSource = await fetch("client/render/glsl/shaders/fragment/bg/frag.glsl").then(resp => resp.text());
 
     const vertexShader = gl?.createShader(gl.VERTEX_SHADER);
     if (!vertexShader) throw new Error("failed to compile vertex shader.");

@@ -49,7 +49,7 @@ export default function initWs() {
 
                     player.x = playerData.x;
                     player.y = playerData.y;
-                    console.error(player.lastx, player.x);
+                    console.error(player.x, player.y);
                 }
             }
         }
