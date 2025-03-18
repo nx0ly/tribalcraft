@@ -33,7 +33,7 @@ class Player implements PlayerType {
     public health: number;
     public alive = false;
     public moveDir: number | undefined = undefined;
-    public speed = 55;
+    public speed = 45;
     public xVel = 0;
     public yVel = 0;
 

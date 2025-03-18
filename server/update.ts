@@ -16,30 +16,32 @@ function update() {
         let sineMovement = (player.moveDir !== null ? Math.sin(player.moveDir) : 0);
         const distance = Math.sqrt(cosineMovement * cosineMovement + sineMovement * sineMovement);
 
-        console.log(player.moveDir, player.moveDir !== null, (player.moveDir !== undefined ? Math.cos(player.moveDir) : 0), sineMovement)
-
         if(distance !== 0) {
-            cosineMovement /= distance * 1.75;
-            sineMovement /= distance * 1.75;
+            cosineMovement /= distance;
+            sineMovement /= distance;
         }
 
         player.xVel += cosineMovement;
         player.yVel += sineMovement;
 
         if (Math.abs(player.xVel) > 0.01) {
-            player.xVel *= 0.993 ** 100;
+            player.xVel *= 0.993 ** (player.y > 12800 ? 50 : 100);
         } else {
             player.xVel = 0;
         }
 
         if (Math.abs(player.yVel) > 0.01) {
-            player.yVel *= 0.993 ** 100;
+            player.yVel *= 0.993 ** (player.y > 12800 ? 50 : 100);
         } else {
             player.yVel = 0;
         }
 
-        player.x += player.xVel * 100;
-        player.y += player.yVel * 100;
+        player.x += player.xVel * (player.y > 12800 ? player.speed * 0.75 : player.speed);
+        player.y += player.yVel * (player.y > 12800 ? player.speed * 0.75 : player.speed);
+
+        // clamp player position to boundary of map
+        player.x = Math.min(16800, Math.max(player.x, 0));
+        player.y = Math.min(16800, Math.max(player.y, 0));
     }
 
     sendToAll(["updateppl", connectedPlayers.map(player => ({
@@ -58,8 +60,6 @@ function sendToAll(data) {
 }
 
 export default function initUpdateLoop() {
-    console.log(Number(process.env.UPDATELOOP) || 100);
-
     setInterval(() => {
         update();
     }, (Number(process.env.UPDATELOOP) || 100))

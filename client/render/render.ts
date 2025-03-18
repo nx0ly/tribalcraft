@@ -86,7 +86,7 @@ export async function draw() {
         camera.y = 16800 / 2;
     }
 
-    clearCanvas([0.2, 0.2, 0.2, 1.0]);
+    clearCanvas([0.0, 0.0, 0.0, 1.0]);
 
     // snow
     renderRectangle(program, gl, {
@@ -117,12 +117,15 @@ export async function draw() {
         y: (-yOffset / ye) * 2.0 - 1.0,
         width: (16800 / ge) * 2.0,
         height: (16800 / ye) * 2.0
-    }, [0.0, 0.0, 50.0 / 255.0, 0.25], true);
+    }, [0.0, 0.0, 60.0 / 255.0, 0.35], true);
 
     // grid
-    const gridSize = 80;
-    const lineWidth = 6;
+    if (!gl || !program) return;
+
+    const gridSize = 60;
+    const lineWidth = 4;
     const maxDimension = 16800;
+    const aspectRatio = innerWidth / innerHeight;
     
     const startX = Math.max(0, ~~(xOffset / gridSize) * gridSize);
     const endX = Math.min(startX + ge + gridSize, maxDimension);
@@ -141,7 +144,7 @@ export async function draw() {
     
     const vertices = new Float32Array(8);
     const lineWNorm = (lineWidth / ge) * 2;
-    const lineHNorm = (lineWidth / ye) * 2;
+    const lineHNorm = lineWNorm * aspectRatio;
     
     for (let x = startX; x < endX; x += gridSize) {
         const xPos = ((x - xOffset) / ge) * 2 - 1;
@@ -189,9 +192,9 @@ export async function draw() {
         renderRectangle(program, gl, {
             x: ((player.xl - xOffset) / ge) * 2 - 1,
             y: ((player.yl - yOffset) / ye) * 2 - 1,
-            width: 50 / ge * 2,
-            height: 50 / ye * 2
-        }, [1, 0, 0, 0.6]);
+            width: 50 / innerWidth * 2,
+            height: 50 / innerHeight * 2
+        }, [1, 0, 0, 1]);
     }
 
     gl?.flush();
