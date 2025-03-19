@@ -1,0 +1,95 @@
+* {
+    margin: 0;
+    padding: 0;
+    
+    font-family: "Lilita One";
+    text-shadow: -2px -2px 0 black, -2px 0 0 black, -2px 2px 0 black, 0 -2px 0 black, 0 2px 0 black, 2px -2px 0 black, 2px 0 0 black, 2px 2px 0 black;
+}
+
+body {
+    background: #D9D9D9;
+}
+
+#mainMenu {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: red;
+}
+
+#links {
+    background-color: blue;
+
+    display: flex;
+    align-items: center;
+    vertical-align: middle;
+    flex-direction: column;
+
+    float: left;
+}
+
+.external-icon {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    
+    object-fit: contain;
+    background-color: transparent;
+
+    border: 2px solid #000;
+
+    margin: 5px 0;
+    padding: 5px;
+}
+
+#player-modal {
+    position: absolute;
+    top: 40%;
+    left: 40%;
+
+    transform: translate(-60%, -60%);
+
+    width: 340px;
+    height: 240px;
+
+    border-radius: 18px;
+
+    background: #444444;
+}
+
+#name-input {
+    position: absolute;
+
+    top: 70%;
+    left: 40%;
+
+    transform: translate(-60%, -30%);
+
+    width: 300px;
+    height: 40px;
+    border-radius: 12px;
+
+    text-align: center;
+    font-size: 15px;
+}
+
+#play-button {
+    position: absolute;
+
+    top: 80%;
+    left: 40%;
+
+    transform: translate(-60%, -20%);
+
+    width: 260px;
+    height: 60px;
+
+    background-color: #88F286;
+    text-align: center;
+    vertical-align: middle;
+
+    color: #fff;
+    font-size: 30px;
+
+    border-radius: 18px;
+}

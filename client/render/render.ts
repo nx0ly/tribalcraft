@@ -6,6 +6,9 @@ import clearCanvas from "./renderutils/clearCanvas";
 import { renderRectangle } from "./renderutils/renderRectangle";
 import hexToRGB from "../../util/hexToRGB";
 import { smooth } from "../../util/smoothDiff";
+import renderToolBar from "./functions/toolbar";
+import renderLeaderboard from "./functions/leaderboard";
+import ageBar from "./functions/ageBar";
 
 export const canvas: HTMLCanvasElement | null = document.querySelector("#gameCanvas");
 if (!canvas) throw new Error("Cannot find canvas element on the DOM.");
@@ -33,9 +36,8 @@ const grassland = hexToRGB("#b6db66");
 const snow = hexToRGB("#ffffff");
 const river = hexToRGB("#91b2db");
 const desert = hexToRGB("#dbc666");
-const snowBiomeTop = 4000;
-const ge = 1920;
-const ye = 1080;
+const ge = innerWidth;
+const ye = innerHeight;
 
 let lastFrameTime = Date.now();
 let delta = 0;
@@ -48,8 +50,12 @@ export async function draw() {
             draw();
         }, 500);
 
+        console.log("program not found")
+
         return;
     }
+
+    if (!gl || !program) return;
 
     // enable webgl features (should be in init function move later)
     gl.enable(gl.BLEND);
@@ -94,7 +100,7 @@ export async function draw() {
         y: (-yOffset / ye) * 2.0 - 1.0,
         width: (16800 / ge) * 2.0,
         height: (16800 / ye) * 2.0
-    }, [snow[0] / 255, snow[1] / 255, snow[2] / 255, 1]);
+    }, [snow[0] / 255, snow[1] / 255, snow[2] / 255, 1], true);
 
     // grassland
     renderRectangle(program, gl, {
@@ -120,17 +126,14 @@ export async function draw() {
     }, [0.0, 0.0, 60.0 / 255.0, 0.35], true);
 
     // grid
-    if (!gl || !program) return;
-
     const gridSize = 60;
     const lineWidth = 4;
     const maxDimension = 16800;
-    const aspectRatio = innerWidth / innerHeight;
     
     const startX = Math.max(0, ~~(xOffset / gridSize) * gridSize);
-    const endX = Math.min(startX + ge + gridSize, maxDimension);
+    const endX = Math.min(startX + innerWidth + gridSize, maxDimension);
     const startY = Math.max(0, ~~(yOffset / gridSize) * gridSize);
-    const endY = Math.min(startY + ye + gridSize, maxDimension);
+    const endY = Math.min(startY + innerHeight + gridSize, maxDimension);
     
     const vertexBuffer = gl.createBuffer();
     gl.bindBuffer(gl.ARRAY_BUFFER, vertexBuffer);
@@ -143,13 +146,13 @@ export async function draw() {
     gl.uniform4f(gl.getUniformLocation(program, "u_color"), 0.0, 0.0, 0.0, 0.06);
     
     const vertices = new Float32Array(8);
-    const lineWNorm = (lineWidth / ge) * 2;
-    const lineHNorm = lineWNorm * aspectRatio;
+    const lineWNorm = (lineWidth / innerWidth) * 2;
+    const lineHNorm = (lineWidth / innerHeight) * 2;
     
     for (let x = startX; x < endX; x += gridSize) {
-        const xPos = ((x - xOffset) / ge) * 2 - 1;
-        const yBottom = (-yOffset / ye) * 2 - 1;
-        const yTop = ((maxDimension - yOffset) / ye) * 2 - 1;
+        const xPos = ((x - xOffset) / innerWidth) * 2 - 1;
+        const yBottom = (-yOffset / innerHeight) * 2 - 1;
+        const yTop = ((maxDimension - yOffset) / innerHeight) * 2 - 1;
         
         vertices.set([
             xPos, yBottom,
@@ -163,9 +166,9 @@ export async function draw() {
     }
     
     for (let y = startY; y < endY; y += gridSize) {
-        const yPos = ((y - yOffset) / ye) * 2 - 1;
-        const xLeft = (-xOffset / ge) * 2 - 1;
-        const xRight = ((maxDimension - xOffset) / ge) * 2 - 1;
+        const yPos = ((y - yOffset) / innerHeight) * 2 - 1;
+        const xLeft = (-xOffset / innerWidth) * 2 - 1;
+        const xRight = ((maxDimension - xOffset) / innerWidth) * 2 - 1;
         
         vertices.set([
             xLeft, yPos,
@@ -177,9 +180,7 @@ export async function draw() {
         gl.bufferData(gl.ARRAY_BUFFER, vertices, gl.DYNAMIC_DRAW);
         gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
     }
-    
-    gl.disable(gl.BLEND);
-    
+        
     for(const player of PlayerManager.players) {
         //this.render.dx, 0.005 * delay
 
@@ -197,6 +198,12 @@ export async function draw() {
         }, [1, 0, 0, 1]);
     }
 
+    // render everything else non-critical
+    renderToolBar(program, gl);
+    renderLeaderboard(program, gl);
+    ageBar(program, gl);
+
+    gl.disable(gl.BLEND);
     gl?.flush();
     requestAnimationFrame(draw);
 }

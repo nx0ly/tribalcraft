@@ -62,3 +62,10 @@ function updateRotation() {
 
     ws.wsSend(["look", rotation]);
 }
+
+// prevent skiddies from using Canvas2D
+Object.freeze(Object.defineProperty(window, 'CanvasRenderingContext2D', {
+    value: null,
+    writable: false,
+    configurable: false
+}));

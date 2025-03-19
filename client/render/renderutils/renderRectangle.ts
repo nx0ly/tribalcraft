@@ -7,14 +7,14 @@ interface Rectangle {
     height: number;
 }
 
-let buffer: WebGLBuffer = gl?.createBuffer();
+let buffer: WebGLBuffer | null = gl?.createBuffer() ?? null;
 
 export function renderRectangle(
     program: WebGLProgram, 
     gl: WebGLRenderingContext | null, 
     { x, y, width, height }: Rectangle, 
     color: [number, number, number, number],
-    useNewBuffer = false
+    useNewBuffer: boolean | number
 ): void {
     if(!gl) throw new Error("gl context is not defined");
     
@@ -25,12 +25,11 @@ export function renderRectangle(
         x + width, y + height  // top right
     ]);
 
-    if(useNewBuffer) {
+    if(useNewBuffer || !buffer) {
         buffer = gl.createBuffer();
     }
-    const vertexBuffer = buffer;
 
-    gl.bindBuffer(gl.ARRAY_BUFFER, vertexBuffer);
+    gl.bindBuffer(gl.ARRAY_BUFFER, buffer);
     gl.bufferData(gl.ARRAY_BUFFER, vertices, gl.STATIC_DRAW);
 
     const positionLocation = gl.getAttribLocation(program, "position");
@@ -42,5 +41,11 @@ export function renderRectangle(
 
     gl.useProgram(program);
     gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
-    gl.deleteBuffer(vertexBuffer);
+
+    /*
+    if(useNewBuffer && buffer) {
+        gl.deleteBuffer(buffer);
+        buffer = null;
+    }
+    */
 }
