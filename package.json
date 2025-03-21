@@ -23,11 +23,19 @@
     "esbuild": "^0.25.1",
     "express": "^4.21.2",
     "fs": "0.0.1-security",
+    "javascript-obfuscator": "^4.1.1",
     "path": "^0.12.7",
     "url": "^0.11.4",
     "ws": "^8.18.1"
   },
   "devDependencies": {
-    "@types/node": "^22.13.10"
+    "@babel/core": "^7.26.10",
+    "@babel/preset-env": "^7.26.9",
+    "@bytehide/webpack-shield": "^1.1.0",
+    "@types/node": "^22.13.10",
+    "babel-loader": "^10.0.0",
+    "ts-loader": "^9.5.2",
+    "webpack": "^5.98.0",
+    "webpack-cli": "^6.0.1"
   }
 }

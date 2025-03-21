@@ -9,6 +9,7 @@ import { smooth } from "../../util/smoothDiff";
 import renderToolBar from "./functions/toolbar";
 import renderLeaderboard from "./functions/leaderboard";
 import ageBar from "./functions/ageBar";
+import { renderSprite } from "./renderutils/renderSprite";
 
 export const canvas: HTMLCanvasElement | null = document.querySelector("#gameCanvas");
 if (!canvas) throw new Error("Cannot find canvas element on the DOM.");
@@ -44,6 +45,13 @@ let delta = 0;
 
 const fpsDisplay = document.getElementById("fpsDisplay");
 
+const img = new Image();
+img.crossOrigin = "anonymous";
+img.src = "https://cdn.glitch.global/4a0d74ac-5e58-44d7-bb16-2415b72052f6/tribalplayerhead%20(1).svg";
+img.onload = () => {
+    img.isloaded = true;
+};
+
 export async function draw() {
     if (!program) {
         setTimeout(() => {
@@ -60,6 +68,10 @@ export async function draw() {
     // enable webgl features (should be in init function move later)
     gl.enable(gl.BLEND);
     gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
+
+    // disable sprite rendering until needed
+    const isSpriteLoc = gl.getUniformLocation(program, "u_isSprite");
+    gl.uniform1f(isSpriteLoc, 0.0);
 
     const current = Date.now();
     delta = current - lastFrameTime;
@@ -108,7 +120,7 @@ export async function draw() {
         y: (-yOffset / ye) * 2.0 - 1.0,
         width: (16800 / ge) * 2.0,
         height: (12800 / ye) * 2.0
-    }, [grassland[0] / 255, grassland[1] / 255, grassland[2] / 255, 1]);
+    }, [grassland[0] / 255, grassland[1] / 255, grassland[2] / 255, 1], false);
 
     // desert
     renderRectangle(program, gl, {
@@ -116,7 +128,7 @@ export async function draw() {
         y: (-yOffset / ye) * 2.0 - 1.0,
         width: (16800 / ge) * 2.0,
         height: (4000 / ye) * 2.0
-    }, [desert[0] / 255, desert[1] / 255, desert[2] / 255, 1]);
+    }, [desert[0] / 255, desert[1] / 255, desert[2] / 255, 1], false);
     
     renderRectangle(program, gl, {
         x: (-xOffset / ge) * 2.0 - 1.0,
@@ -180,7 +192,7 @@ export async function draw() {
         gl.bufferData(gl.ARRAY_BUFFER, vertices, gl.DYNAMIC_DRAW);
         gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
     }
-        
+
     for(const player of PlayerManager.players) {
         //this.render.dx, 0.005 * delay
 
@@ -190,12 +202,19 @@ export async function draw() {
         if(player.xl) player.xl += smooth(player.dx, 0.01 * delta);
         if(player.yl) player.yl += smooth(player.dy, 0.01 * delta);
 
+        if(img.isloaded) {
+            renderSprite(program, gl, img, ((player.xl - xOffset) / ge) * 2 - 1, ((player.yl - yOffset) / ye) * 2 - 1, 100 / innerWidth * 2, 100 / innerHeight * 2, xOffset, yOffset);
+        }
+        /*
         renderRectangle(program, gl, {
             x: ((player.xl - xOffset) / ge) * 2 - 1,
             y: ((player.yl - yOffset) / ye) * 2 - 1,
             width: 50 / innerWidth * 2,
             height: 50 / innerHeight * 2
-        }, [1, 0, 0, 1]);
+        }, [1, 0, 0, 1], false);
+        */
+
+        //renderSprite(program, gl, )
     }
 
     // render everything else non-critical
@@ -204,6 +223,6 @@ export async function draw() {
     ageBar(program, gl);
 
     gl.disable(gl.BLEND);
-    gl?.flush();
+    //gl?.flush();
     requestAnimationFrame(draw);
 }

@@ -13,7 +13,6 @@ app.get("/", (req, res) => {
 
 app.get("*", (req, res) => {
     const filePath = resolve(__dirname, `../../${req.path}`);
-    console.log(filePath)
 
     res.sendFile(filePath, (err) => {
         if (err) {

@@ -5,7 +5,7 @@ interface customWS extends WebSocket {
     wsSend: ((arg: any[]) => void);
 }
 export default function initWs() {
-    const ws = new WebSocket("ws://localhost:8080") as customWS;
+    const ws = new WebSocket("wss://nqzq53pr-8080.use.devtunnels.ms/") as customWS;
 
     ws.wsSend = (arg) => {
         ws.send(JSON.stringify(arg));
