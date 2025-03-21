@@ -46,7 +46,7 @@ const fpsDisplay = document.getElementById("fpsDisplay");
 
 const img = new Image();
 img.crossOrigin = "anonymous";
-img.src = "https://cdn.glitch.global/4a0d74ac-5e58-44d7-bb16-2415b72052f6/tribalplayerhead%20(1).svg";
+img.src = "../../assets/player_0.svg";
 img.onload = () => {
     img.isloaded = true;
 };
