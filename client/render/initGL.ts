@@ -41,3 +41,13 @@ export async function initGL(): Promise<WebGLProgram> {
 
     return shaderProgram;
 }
+
+export function createBuffers() {
+    const vertexBuffer = gl?.createBuffer();
+    const texCoordBuffer = gl?.createBuffer();
+
+    return {
+        vertexBuffer: vertexBuffer,
+        texCoordBuffer: texCoordBuffer
+    }
+}

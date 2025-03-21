@@ -1,6 +1,6 @@
 import getDirection from "../../util/getDirection";
 import getDistance from "../../util/getDistance";
-import { initGL } from "./initGL";
+import { createBuffers, initGL } from "./initGL";
 import { PlayerManager } from "../managers/playerManager";
 import clearCanvas from "./renderutils/clearCanvas";
 import { renderRectangle } from "./renderutils/renderRectangle";
@@ -21,7 +21,6 @@ export const gl: WebGLRenderingContext | null = canvas.getContext("webgl", {
 if (!gl) throw new Error("Unable to initialize WebGL.");
 
 export let program: WebGLProgram | null = null;
-
 (async () => {
     program = await initGL();
 })();
