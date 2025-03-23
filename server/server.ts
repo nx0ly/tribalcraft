@@ -5,11 +5,32 @@ import { fileURLToPath } from "url";
 import type { CowWS } from "./server.d";
 import type { PlayerType } from "../entities/Player";
 import Player from "../entities/Player";
+import { Building } from "../entities/Building";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
 config({
     path: resolve(__dirname, "../.env")
+});
+
+const buildings: Building[] = [];
+
+for (let i = 0; i < 16800; i += 2000) {
+    for (let j = 0; j < 16800; j += 2000) {
+        buildings.push(new Building([1, 2, i, 1, j, 99, 0]))
+    }
+}
+
+const rawBuildData = buildings.map((a) => {
+    return {
+        lolz: a.lolz,
+        id: a.id,
+        x: a.x,
+        _: a._,
+        y: a.y,
+        __: a.__,
+        owner: a.owner
+    };
 });
 
 const IPs: number[] = [];
@@ -43,14 +64,16 @@ export default function InitServer() {
                     socket.wsSend(["setid", id]);
                     socket.wsSend(["addplayer", id, socket.player.x, socket.player.y, true]);
 
-                    for(const stream of connectedClients) {
-                        if(!stream?.player?.id) continue;
-                        if(stream.player.id !== id) stream.wsSend(["addplayer", id, socket.player.x, socket.player.y, false]);
+                    for (const stream of connectedClients) {
+                        if (!stream?.player?.id) continue;
+                        if (stream.player.id !== id) stream.wsSend(["addplayer", id, socket.player.x, socket.player.y, false]);
                     }
 
-                    for(const alreadyExistingPlayer of connectedClients.map((a) => a.player)) {
+                    for (const alreadyExistingPlayer of connectedClients.map((a) => a.player)) {
                         socket.wsSend(["addplayer", alreadyExistingPlayer.id, alreadyExistingPlayer.x, alreadyExistingPlayer.y, false]);
                     }
+
+                    socket.wsSend(["niggaaddbuildings", buildings]);
 
                     connectedPlayers = connectedClients.map((ws: CowWS) => ws.player);
 

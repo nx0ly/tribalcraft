@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500">
+  <path style="stroke-width: 5px; stroke: rgb(68, 68, 68); fill: rgb(247, 211, 84);" d="M 172.148 162.544 L 286.306 136.673 L 363.2 223.086 L 328.158 338.702 L 216.216 363.327 L 136.8 273.707 L 172.148 162.544 Z"/>
+  <path style="stroke-width: 0px; stroke: rgb(232, 195, 75); fill: rgb(247, 229, 163);" d="M 207.882 202.687 L 269.642 188.69 L 311.241 235.44 L 292.284 297.988 L 231.723 311.31 L 188.759 262.825 L 207.882 202.687 Z"/>
+  <path style="stroke-width: 0px; stroke: rgb(247, 211, 84); fill: rgb(228, 194, 77);" d="M 173.989 164.719 L 207.861 203.383 L 269.844 188.788 L 285.455 139.37 L 173.989 164.719 Z"/>
+  <path style="stroke-width: 0px; stroke: rgb(247, 211, 84); fill: rgb(228, 194, 77); transform-origin: 271.492px 329.417px;" d="M 216.656 322.234 L 249.631 361.425 L 311.261 347.533 L 325.95 298.271 L 216.656 322.234 Z" transform="matrix(-1, 0, 0, -1, 0, 0.000061)"/>
+  <path style="stroke-width: 0px; stroke: rgb(247, 211, 84); fill: rgb(255, 218, 85); transform-origin: 312.335px 197.097px;" d="M 257.808 203.313 L 290.871 165.331 L 352.038 179.145 L 367.734 228.379 L 257.808 203.313 Z" transform="matrix(-0.813822, -0.581114, 0.581114, -0.813822, -0.000097, 0.000009)"/>
+  <path style="stroke-width: 0px; stroke: rgb(247, 211, 84); fill: rgb(255, 218, 85); transform-origin: 188.823px 302.833px;" d="M 131.492 306.958 L 165.735 270.414 L 228.526 284.881 L 245.131 333.123 L 131.492 306.958 Z" transform="matrix(0.813822, 0.581114, -0.581114, 0.813822, 0.000046, 0.000105)"/>
+</svg>

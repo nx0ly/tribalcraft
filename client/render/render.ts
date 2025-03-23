@@ -9,7 +9,8 @@ import { smooth } from "../../util/smoothDiff";
 import renderToolBar from "./functions/toolbar";
 import renderLeaderboard from "./functions/leaderboard";
 import ageBar from "./functions/ageBar";
-import { renderSprite } from "./renderutils/renderSprite";
+import { renderSprites } from "./renderutils/renderSprite";
+import renderBuildings from "./functions/renderBuildings";
 
 export const canvas: HTMLCanvasElement | null = document.querySelector("#gameCanvas");
 if (!canvas) throw new Error("Cannot find canvas element on the DOM.");
@@ -46,7 +47,7 @@ const fpsDisplay = document.getElementById("fpsDisplay");
 
 const img = new Image();
 img.crossOrigin = "anonymous";
-img.src = "../../assets/player_0.svg";
+img.src = "../../assets/tribalwallupdate.svg";
 img.onload = () => {
     img.isloaded = true;
 };
@@ -129,13 +130,6 @@ export async function draw() {
         height: (4000 / ye) * 2.0
     }, [desert[0] / 255, desert[1] / 255, desert[2] / 255, 1], false);
     
-    renderRectangle(program, gl, {
-        x: (-xOffset / ge) * 2.0 - 1.0,
-        y: (-yOffset / ye) * 2.0 - 1.0,
-        width: (16800 / ge) * 2.0,
-        height: (16800 / ye) * 2.0
-    }, [0.0, 0.0, 60.0 / 255.0, 0.35], true);
-
     // grid
     const gridSize = 60;
     const lineWidth = 4;
@@ -192,6 +186,8 @@ export async function draw() {
         gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
     }
 
+    renderBuildings(program, gl, xOffset, yOffset, 0);
+
     for(const player of PlayerManager.players) {
         //this.render.dx, 0.005 * delay
 
@@ -202,7 +198,7 @@ export async function draw() {
         if(player.yl) player.yl += smooth(player.dy, 0.01 * delta);
 
         if(img.isloaded) {
-            renderSprite(program, gl, img, ((player.xl - xOffset) / ge) * 2 - 1, ((player.yl - yOffset) / ye) * 2 - 1, 100 / innerWidth * 2, 100 / innerHeight * 2, xOffset, yOffset);
+            //renderSprite(program, gl, img, ((player.xl - xOffset) / ge) * 2 - 1, ((player.yl - yOffset) / ye) * 2 - 1, 300 / innerWidth * 2, 300 / innerHeight * 2, xOffset, yOffset);
         }
         /*
         renderRectangle(program, gl, {
@@ -216,12 +212,19 @@ export async function draw() {
         //renderSprite(program, gl, )
     }
 
+    renderRectangle(program, gl, {
+        x: (-xOffset / ge) * 2.0 - 1.0,
+        y: (-yOffset / ye) * 2.0 - 1.0,
+        width: (16800 / ge) * 2.0,
+        height: (16800 / ye) * 2.0
+    }, [0.0, 0.0, 60.0 / 255.0, 0.35], true);
+
     // render everything else non-critical
     renderToolBar(program, gl);
     renderLeaderboard(program, gl);
     ageBar(program, gl);
 
-    gl.disable(gl.BLEND);
-    //gl?.flush();
+    //gl.disable(gl.BLEND);
+    gl?.flush();
     requestAnimationFrame(draw);
 }

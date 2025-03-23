@@ -1,3 +1,4 @@
+import { BuildingManager } from "../managers/buildingManager";
 import { PlayerManager } from "../managers/playerManager";
 
 interface customWS extends WebSocket {
@@ -51,6 +52,13 @@ export default function initWs() {
                     player.y = playerData.y;
                     console.error(player.x, player.y);
                 }
+
+                break;
+            }
+
+            case "niggaaddbuildings": {
+                BuildingManager.setInitialBuilds(args[0]);
+                break;
             }
         }
     }

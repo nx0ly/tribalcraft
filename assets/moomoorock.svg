@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500" xmlns:bx="https://boxy-svg.com">
+  <defs>
+    <bx:export>
+      <bx:file format="svg"/>
+    </bx:export>
+  </defs>
+  <path style="stroke-width: 0px; stroke: rgb(236, 236, 236); fill: rgb(109, 110, 133);" d="M 178.336 172.384 L 277.534 164.967 L 350.723 227.398 L 309.681 315.238 L 217.136 349.676 L 161.039 269.539 L 178.336 172.384 Z"/>
+  <path style="fill: rgb(50, 51, 73); stroke: rgb(56, 56, 81); stroke-width: 0px;" d="M 403.913 221.679 L 350.514 227.267 L 309.683 314.848 L 357.754 365.633 L 403.913 221.679 Z"/>
+  <path style="fill: rgb(118, 119, 148); stroke: rgb(56, 56, 81); stroke-linecap: round; stroke-width: 0px;" d="M 309.859 314.783 L 357.971 365.674 L 196.86 398.413 L 217.371 349.41 L 309.859 314.783 Z"/>
+  <path style="fill: rgb(85, 86, 108); stroke: rgb(56, 56, 81); stroke-width: 0px;" d="M 217.472 349.56 L 196.87 398.365 L 95.282 283.167 L 161.632 270.062 L 217.472 349.56 Z"/>
+  <path style="fill: rgb(50, 51, 73); stroke: rgb(56, 56, 81); stroke-width: 0px;" d="M 143.32 133.582 L 178.744 172.851 L 161.614 270.383 L 95.555 283.271 L 143.32 133.582 Z"/>
+  <path style="fill: rgb(118, 119, 148); stroke: rgb(56, 56, 81); stroke-width: 0px;" d="M 178.467 172.905 L 142.884 133.146 L 294.266 101.484 L 278.687 164.999 L 178.467 172.905 Z"/>
+  <path style="fill: rgb(85, 86, 108); stroke: rgb(56, 56, 81); stroke-width: 0px;" d="M 277.64 165.32 L 294.13 101.43 L 403.884 221.729 L 350.498 227.496 L 277.64 165.32 Z"/>
+  <path style="stroke-width: 5px; fill: rgba(216, 216, 216, 0); stroke: rgb(68, 68, 68);" d="M 143.806 133.297 L 95.066 283.152 L 195.23 397.563 L 358.826 367.132 L 406.139 220.953 L 294.71 100.653 L 143.806 133.297 Z"/>
+</svg>
