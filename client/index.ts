@@ -1,9 +1,7 @@
-import { canvas, draw, gl, program } from "./render/render";
-import { renderSprites } from "./render/renderutils/renderSprite";
+import { canvas, draw, gl } from "./render/render";
 import { ws } from "./websocket/init";
 
 draw();
-renderSprites(program, gl, [], true)
 
 if (canvas) {
     canvas.style.width = `${window.innerWidth}px`;

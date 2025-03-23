@@ -8,8 +8,6 @@ config({
     path: resolve(__dirname, "../.env")
 });
 
-
-
 function update() {
     for(const player of connectedPlayers) {
         if(!player?.alive) continue;
